@@ -1,0 +1,82 @@
+version: "3.7"
+services:
+
+  back:
+    container_name: TL_Backend
+    build:
+      context: app
+    restart: always
+    depends_on:
+      - redis-cache
+      - mongo_db
+    ports:
+      - "10090:10090"
+    entrypoint: ["sh", "/app/app.sh"]
+    tty: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    env_file:
+      - app/config/.env-docker-back
+    networks:
+      - basic_network
+
+
+
+  tests:
+    container_name: TL_Tests
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - .:/app
+    command: [ "pytest", "-v" ,"/app/tests/test_classification.py" ]
+    tty: true
+    depends_on:
+      - back
+    env_file:
+      - app/config/.env-docker-back
+    networks:
+      - basic_network
+
+
+
+  redis-cache:
+    image: redis:7
+    container_name: TL_Redis
+    restart: always
+    mem_reservation: 4G
+    networks:
+      - basic_network
+    command: --port 10091
+    expose:
+      - 10091
+
+
+  mongo_db:
+      image: mongo
+      container_name: TL_MongoDB
+      restart: on-failure
+      ports:
+        - "27017:27017"
+      networks:
+        - basic_network
+      volumes:
+        - ./init_data.js:/docker-entrypoint-initdb.d/init_data.js
+        - mongodb-log:/var/log/mongodb
+
+
+
+volumes:
+  mongodb-data:
+    driver: local
+  mongodb-log:
+    driver: local
+
+networks:
+  basic_network:
+    driver: bridge
+
+
