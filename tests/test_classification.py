@@ -33,7 +33,7 @@ mongo_data = [
 
 client = TestClient(app)
 
-base_url = f"http://back:{DefaultServerSettings.APP_PORT}/test_leadhit/api/v1"
+base_url = f"http://back:{DefaultServerSettings.APP_PORT}"
 
 
 def test_correct_classification_without_excess_data():

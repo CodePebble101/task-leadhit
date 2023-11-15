@@ -7,6 +7,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
-CMD ["sh", "/app/app.sh"]
-
+CMD ["sh", "./app.sh"]
+#CMD ["uvicorn","main:app", "--host", "0.0.0.0"]
 

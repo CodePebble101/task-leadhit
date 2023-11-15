@@ -11,7 +11,7 @@ services:
       - mongo_db
     ports:
       - "10090:10090"
-    entrypoint: ["sh", "/app/app.sh"]
+#    entrypoint: ["sh", "/app/app.sh"]
     tty: true
     logging:
       driver: "json-file"
