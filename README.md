@@ -34,3 +34,4 @@ ____________________
 ### Контакты для связи:
 - Email: ShaburovDA.work@yandex.ru
 - Telegram: @dmitriy_shaburov
+- Ссылка на моё резюме https://hh.ru/resume/0f1dc611ff0968d21f0039ed1f4f557a706f50
